@@ -1,8 +1,8 @@
+
 #ifndef POLICEOFFICER_H
 #define POLICEOFFICER_H
 
 #include <string>
-
 using namespace std;
 
 class PoliceOfficer
@@ -18,7 +18,7 @@ public:
     PoliceOfficer();
 
     PoliceOfficer(int id, string officerName, string officerRank,
-                   string officerUsername, bool officerAvailable);
+                  string officerUsername, bool officerAvailable);
 
     void displayOfficer();
 
@@ -27,6 +27,8 @@ public:
     string getRank();
     string getUsername();
     bool isAvailable();
+
+    void setAvailability(bool value);
 };
 
 #endif

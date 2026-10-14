@@ -1,6 +1,6 @@
+
 #include <iostream>
 #include "PoliceOfficer.h"
-
 using namespace std;
 
 PoliceOfficer::PoliceOfficer()
@@ -9,11 +9,13 @@ PoliceOfficer::PoliceOfficer()
     name = "";
     rank = "";
     username = "";
-    available = false;
+    available = true;
 }
 
-PoliceOfficer::PoliceOfficer(int id, string officerName, string officerRank,
-                             string officerUsername, bool officerAvailable)
+PoliceOfficer::PoliceOfficer(int id, string officerName,
+                             string officerRank,
+                             string officerUsername,
+                             bool officerAvailable)
 {
     officerId = id;
     name = officerName;
@@ -24,42 +26,22 @@ PoliceOfficer::PoliceOfficer(int id, string officerName, string officerRank,
 
 void PoliceOfficer::displayOfficer()
 {
-    cout << "Officer ID: " << officerId << endl;
-    cout << "Name: " << name << endl;
-    cout << "Rank: " << rank << endl;
-    cout << "Username: " << username << endl;
-
-    if (available)
-    {
-        cout << "Availability: Available" << endl;
-    }
-    else
-    {
-        cout << "Availability: Not Available" << endl;
-    }
+    cout << "\nOfficer ID: " << officerId
+         << "\nName: " << name
+         << "\nRank: " << rank
+         << "\nUsername: " << username
+         << "\nAvailability: "
+         << (available ? "Available" : "Unavailable")
+         << endl;
 }
 
-int PoliceOfficer::getOfficerId()
-{
-    return officerId;
-}
+int PoliceOfficer::getOfficerId() { return officerId; }
+string PoliceOfficer::getName() { return name; }
+string PoliceOfficer::getRank() { return rank; }
+string PoliceOfficer::getUsername() { return username; }
+bool PoliceOfficer::isAvailable() { return available; }
 
-string PoliceOfficer::getName()
+void PoliceOfficer::setAvailability(bool value)
 {
-    return name;
-}
-
-string PoliceOfficer::getRank()
-{
-    return rank;
-}
-
-string PoliceOfficer::getUsername()
-{
-    return username;
-}
-
-bool PoliceOfficer::isAvailable()
-{
-    return available;
+    available = value;
 }
