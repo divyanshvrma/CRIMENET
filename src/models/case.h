@@ -3,6 +3,7 @@
 #define CASE_H
 
 #include <string>
+#include <vector>
 using namespace std;
 
 class Case
@@ -29,5 +30,10 @@ public:
 
     void setStatus(string newStatus);
 };
+
+// Persistent case storage
+bool loadCases(vector<Case>& cases);
+bool saveCases(const vector<Case>& cases);
+int generateNextCaseId(const vector<Case>& cases);
 
 #endif
