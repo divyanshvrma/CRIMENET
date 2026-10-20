@@ -1,75 +1,102 @@
 #include <iostream>
 #include <string>
+#include <vector>
 #include "admin/Admin.h"
+#include "officer/PoliceOfficer.h"
+#include "dispatcher/Dispatcher.h"
+
 using namespace std;
 
 int main()
 {
     int choice;
 
-    cout << "========================================" << endl;
-    cout << "              CRIMENET" << endl;
-    cout << " Police Case and FIR Management System" << endl;
-    cout << "========================================" << endl;
-
-    cout << endl;
-    cout << "1. Login" << endl;
-    cout << "2. Exit" << endl;
-
-    cout << endl;
-    cout << "Enter your choice: ";
-    cin >> choice;
-
-    if (choice == 1)
+    while (true)
     {
-        string username;
-        string password;
+        cout << "\n========================================\n";
+        cout << "              CRIMENET\n";
+        cout << " Police Case and FIR Management System\n";
+        cout << "========================================\n";
+        cout << "1. Login\n";
+        cout << "2. Exit\n";
+        cout << "Enter your choice: ";
 
-        cout << endl;
-        cout << "------------- LOGIN -------------" << endl;
-
-        cout << "Enter username: ";
-        cin >> username;
-
-        cout << "Enter password: ";
-        cin >> password;
-
-       if (username == "admin" && password == "admin123")
-{
-    cout << endl;
-    cout << "Login successful!" << endl;
-    cout << "Role: Admin" << endl;
-
-    Admin admin;
-    admin.showDashboard();
-}
-        else if (username == "dispatcher" && password == "disp123")
+        if (!(cin >> choice))
         {
-            cout << endl;
-            cout << "Login successful!" << endl;
-            cout << "Role: Dispatcher" << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+            cout << "Invalid input. Please enter a number.\n";
+            continue;
         }
-        else if (username == "officer" && password == "off123")
+
+        if (choice == 1)
         {
-            cout << endl;
-            cout << "Login successful!" << endl;
-            cout << "Role: Police Officer" << endl;
+            string username, password;
+
+            cout << "\n------------- LOGIN -------------\n";
+            cout << "Enter username: ";
+            cin >> username;
+
+            cout << "Enter password: ";
+            cin >> password;
+
+            // Admin Login
+            if (username == "admin" && password == "admin123")
+            {
+                cout << "\nLogin successful!\n";
+                cout << "Role: Admin\n";
+
+                Admin admin;
+                admin.showDashboard();
+            }
+
+            // Dispatcher Login
+            else if (username == "dispatcher" && password == "disp123")
+            {
+                cout << "\nLogin successful!\n";
+                cout << "Role: Dispatcher\n";
+
+                Dispatcher dispatcher;
+                dispatcher.showDashboard();
+            }
+
+            // Police Officer Login
+            else
+            {
+                vector<PoliceOfficer> officers;
+                loadOfficers(officers);
+
+                bool loggedIn = false;
+
+                for (auto& officer : officers)
+                {
+                    if (officer.getUsername() == username &&
+                        officer.getPassword() == password)
+                    {
+                        cout << "\nLogin successful!\n";
+                        cout << "Role: Police Officer\n";
+
+                        officer.showDashboard();
+                        loggedIn = true;
+                        break;
+                    }
+                }
+
+                if (!loggedIn)
+                {
+                    cout << "\nInvalid username or password.\n";
+                }
+            }
+        }
+        else if (choice == 2)
+        {
+            cout << "\nExiting CRIMENET...\n";
+            break;
         }
         else
         {
-            cout << endl;
-            cout << "Invalid username or password." << endl;
+            cout << "Invalid choice. Please try again.\n";
         }
-    }
-    else if (choice == 2)
-    {
-        cout << endl;
-        cout << "Exiting CRIMENET..." << endl;
-    }
-    else
-    {
-        cout << endl;
-        cout << "Invalid choice." << endl;
     }
 
     return 0;
