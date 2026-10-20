@@ -1,9 +1,9 @@
-
 #include <iostream>
 #include <string>
 #include <vector>
 #include "admin/Admin.h"
 #include "officer/PoliceOfficer.h"
+#include "dispatcher/Dispatcher.h"
 
 using namespace std;
 
@@ -40,6 +40,7 @@ int main()
             cout << "Enter password: ";
             cin >> password;
 
+            // Admin Login
             if (username == "admin" && password == "admin123")
             {
                 cout << "\nLogin successful!\n";
@@ -48,16 +49,21 @@ int main()
                 Admin admin;
                 admin.showDashboard();
             }
+
+            // Dispatcher Login
             else if (username == "dispatcher" && password == "disp123")
             {
                 cout << "\nLogin successful!\n";
                 cout << "Role: Dispatcher\n";
-                cout << "Dispatcher module is not connected yet.\n";
+
+                Dispatcher dispatcher;
+                dispatcher.showDashboard();
             }
+
+            // Police Officer Login
             else
             {
                 vector<PoliceOfficer> officers;
-
                 loadOfficers(officers);
 
                 bool loggedIn = false;
