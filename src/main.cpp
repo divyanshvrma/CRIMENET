@@ -1,11 +1,49 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <conio.h>
+
 #include "admin/Admin.h"
 #include "officer/PoliceOfficer.h"
 #include "dispatcher/Dispatcher.h"
 
 using namespace std;
+
+// Read password while displaying asterisks
+string getPassword()
+{
+    string password;
+    char ch;
+
+    while (true)
+    {
+        ch = _getch();
+
+        // Enter key
+        if (ch == '\r')
+        {
+            cout << endl;
+            break;
+        }
+        // Backspace key
+        else if (ch == '\b')
+        {
+            if (!password.empty())
+            {
+                password.pop_back();
+                cout << "\b \b";
+            }
+        }
+        // Accept printable characters
+        else if (ch >= 32 && ch <= 126)
+        {
+            password += ch;
+            cout << '*';
+        }
+    }
+
+    return password;
+}
 
 int main()
 {
@@ -25,20 +63,22 @@ int main()
         {
             cin.clear();
             cin.ignore(10000, '\n');
+
             cout << "Invalid input. Please enter a number.\n";
             continue;
         }
 
         if (choice == 1)
         {
-            string username, password;
+            string username;
+            string password;
 
             cout << "\n------------- LOGIN -------------\n";
             cout << "Enter username: ";
             cin >> username;
 
             cout << "Enter password: ";
-            cin >> password;
+            password = getPassword();
 
             // Admin Login
             if (username == "admin" && password == "admin123")
@@ -49,9 +89,9 @@ int main()
                 Admin admin;
                 admin.showDashboard();
             }
-
             // Dispatcher Login
-            else if (username == "dispatcher" && password == "disp123")
+            else if (username == "dispatcher" &&
+                     password == "disp123")
             {
                 cout << "\nLogin successful!\n";
                 cout << "Role: Dispatcher\n";
@@ -59,7 +99,6 @@ int main()
                 Dispatcher dispatcher;
                 dispatcher.showDashboard();
             }
-
             // Police Officer Login
             else
             {
@@ -77,6 +116,7 @@ int main()
                         cout << "Role: Police Officer\n";
 
                         officer.showDashboard();
+
                         loggedIn = true;
                         break;
                     }
